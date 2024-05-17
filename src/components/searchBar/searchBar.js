@@ -1,10 +1,10 @@
-
+import './searchBar.css';
 
 function SearchBar () {
     return (
         <form className="main-box">
-            <input type="text"></input>
-            <button>Search</button>
+            <input className='input-field' type="text"></input>
+            <button className='button'>Search</button>
        </form>
     );
 };
