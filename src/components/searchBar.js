@@ -2,10 +2,10 @@ import React, { useState } from "react";
 
 function SearchBar () {
     return (
-        <div>
-            <input></input>
-            <button></button>
-        </div>
+        <form>
+            <input type="text"></input>
+            <button>Search</button>
+       </form>
     );
 };
 
