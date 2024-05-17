@@ -2,7 +2,7 @@
 
 function SearchBar () {
     return (
-        <form>
+        <form className="main-box">
             <input type="text"></input>
             <button>Search</button>
        </form>
