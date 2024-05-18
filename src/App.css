@@ -14,8 +14,7 @@
 }
 
 .App-header {
-  /* background-color: #282c34; */
-  background-image: url('/src/forest.jpg');
+  background-image: url('/src/backgroundImg.jpg');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
