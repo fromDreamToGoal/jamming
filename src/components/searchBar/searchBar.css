@@ -11,9 +11,19 @@
 }
 
 .button {
-    background-color: hsla(68, 86%, 45%, 0.858);
-    width: 20%;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: white;
+    background-color: hsla(68, 86%, 45%, 0.3);
+    width: 6rem;
     height: 3rem;
-    border-radius: 40%;
-    border: 0.3rem solid green;
+    border-radius: 25px;
+    border: 3px solid green;
+}
+
+.button:hover {
+    color: rgb(170, 255, 93);
+    background-color: rgba(107, 120, 93, 0.8);
+    cursor: pointer;
 }

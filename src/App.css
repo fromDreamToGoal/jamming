@@ -15,8 +15,9 @@
 
 .App-header {
   /* background-color: #282c34; */
-  background-image: url('/Users/sergei_golovenko/Projects/jamming/src/forest.jpg');
+  background-image: url('/src/forest.jpg');
   background-size: cover;
+  background-position: center;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
