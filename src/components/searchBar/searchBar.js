@@ -1,9 +1,11 @@
 import './searchBar.css';
 import { useEffect, useState } from 'react';
+import TrackList from '/Users/sergei_golovenko/Projects/jamming/src/components/tracklist/tracklist.js';
 
 function SearchBar() {
     const [inputValue, setInputValue] = useState('');
     const [accessToken, setAccessToken] = useState(null);
+    const [tracks, setTracks] = useState([]);
 
     useEffect(() => {
         const tokenFromURL = getAccessTokenFromURL();
@@ -61,6 +63,7 @@ function SearchBar() {
         if (response.ok) {
             const data = await response.json();
             console.log('Search results: ', data);
+            setTracks(data.tracks.items);
         } else {
             console.error('Failed to fetch search results', response);
             if (response.status === 403) {
@@ -99,13 +102,16 @@ function SearchBar() {
     }
 
     return (
-        <form className="main-box" onSubmit={handleButtonClick}>
-            <input className='input-field'
+        <div>
+            <form className="main-box" onSubmit={handleButtonClick}>
+                <input className='input-field'
                    type="text"
                    value={inputValue}
                    onChange={handleInputChange}></input>
-            <button className='button' type='submit' id='authorize-button'>Search</button>
-        </form>
+                <button className='button' type='submit' id='authorize-button'>Search</button>
+            </form>
+            <TrackList tracks={tracks} />
+        </div>
     );
 };
 

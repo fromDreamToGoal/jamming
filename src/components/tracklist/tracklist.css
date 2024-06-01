@@ -1,0 +1,18 @@
+.track-list {
+    margin-top: 20px;
+}
+
+.track-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.track-item img {
+    margin-right: 10px;
+}
+
+.track-details {
+    display: flex;
+    flex-direction: column;
+}
