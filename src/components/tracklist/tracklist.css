@@ -18,8 +18,13 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 20px;
 }
 
 .button-add {
-    
+    border-radius: 25px;
+}
+
+.table {
+    padding: 0;
 }
