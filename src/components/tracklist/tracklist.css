@@ -1,11 +1,13 @@
 .track-list {
     margin-top: 20px;
+    width: 50%;
 }
 
 .track-item {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    justify-content: space-between;
 }
 
 .track-item img {
@@ -14,5 +16,10 @@
 
 .track-details {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+}
+
+.button-add {
+    
 }

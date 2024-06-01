@@ -102,8 +102,8 @@ function SearchBar() {
     }
 
     return (
-        <div>
-            <form className="main-box" onSubmit={handleButtonClick}>
+        <div className='input-box'>
+            <form className="search-bar" onSubmit={handleButtonClick}>
                 <input className='input-field'
                    type="text"
                    value={inputValue}
