@@ -34,3 +34,11 @@
     align-items: center;
     justify-content: center;
 }
+
+.search-result {
+    margin: 3%;
+}
+
+.form-with-result {
+    width: 100%;
+}

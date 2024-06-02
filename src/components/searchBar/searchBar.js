@@ -102,16 +102,21 @@ function SearchBar() {
     }
 
     return (
-        <div className='input-box'>
-            <form className="search-bar" onSubmit={handleButtonClick}>
-                <input className='input-field'
-                   type="text"
-                   value={inputValue}
-                   onChange={handleInputChange}></input>
-                <button className='button' type='submit' id='authorize-button'>Search</button>
-            </form>
-            <TrackList tracks={tracks} />
+        <div className='form-with-result'>
+            <div className='input-box'>
+                <form className="search-bar" onSubmit={handleButtonClick}>
+                 <input className='input-field'
+                       type="text"
+                       value={inputValue}
+                       onChange={handleInputChange}></input>
+                 <button className='button' type='submit' id='authorize-button'>Search</button>
+                </form>
+            </div>
+            <div className='search-result'>
+                <TrackList tracks={tracks} />
+            </div>
         </div>
+        
     );
 };
 
