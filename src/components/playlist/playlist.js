@@ -1,7 +1,7 @@
 import React from 'react';
 import './playlist.css';
 
-const Playlist = ({ playlist }) => {
+const Playlist = ({ playlist, removeFromPlaylist }) => {
   return (
     <div className="playlist">
       <h2>Playlist</h2>
@@ -12,7 +12,7 @@ const Playlist = ({ playlist }) => {
           {playlist.map(track => (
             <li key={track.id} className="playlist-item">
               <p>{track.name} by {track.artists.map(artist => artist.name).join(', ')}</p>
-              <button>-</button>
+              <button onClick={() => removeFromPlaylist(track.id)}>-</button>
             </li>
           ))}
         </ul>

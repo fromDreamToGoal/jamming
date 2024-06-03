@@ -14,6 +14,10 @@ const TrackList = ({ tracks }) => {
       }
     };
 
+    const removeFromPlaylist = (trackId) => {
+      setPlaylist(playlist.filter(track => track.id !== trackId));
+    };
+
   return (
     <div className='box-result'>
       <div className="track-list">
@@ -36,7 +40,7 @@ const TrackList = ({ tracks }) => {
         </ul>
        )}
        </div>
-       <Playlist playlist={playlist} />
+       <Playlist playlist={playlist} removeFromPlaylist={removeFromPlaylist} />
     </div>
     
   );
