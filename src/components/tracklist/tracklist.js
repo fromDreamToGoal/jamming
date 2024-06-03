@@ -15,8 +15,9 @@ const TrackList = ({ tracks }) => {
     };
 
   return (
-    <div className="track-list">
-        <h2>Results</h2>
+    <div className='box-result'>
+      <div className="track-list">
+        <h2>Results of search</h2>
       {tracks.length === 0 ? (
         <p>No tracks found</p>
       ) : (
@@ -33,9 +34,11 @@ const TrackList = ({ tracks }) => {
             </li>
           ))}
         </ul>
-      )}
-      <Playlist playlist={playlist} />
+       )}
+       </div>
+       <Playlist playlist={playlist} />
     </div>
+    
   );
 };
 

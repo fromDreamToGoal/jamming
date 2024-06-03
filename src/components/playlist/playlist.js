@@ -12,6 +12,7 @@ const Playlist = ({ playlist }) => {
           {playlist.map(track => (
             <li key={track.id} className="playlist-item">
               <p>{track.name} by {track.artists.map(artist => artist.name).join(', ')}</p>
+              <button>-</button>
             </li>
           ))}
         </ul>

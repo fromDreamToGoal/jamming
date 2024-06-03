@@ -1,9 +1,13 @@
 .playlist {
     margin-top: 20px;
+    background-color: hsla(180, 100%, 50%, 0.2);
+    padding: 2rem;
+    border-radius: 1rem;
 }
 
 .playlist-item {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    justify-content: space-between;
 }
