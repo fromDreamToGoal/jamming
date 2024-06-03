@@ -28,6 +28,10 @@
     cursor: pointer;
 }
 
+.button:active {
+    color: green;
+}
+
 .input-box {
     display: flex;
     flex-direction: column;

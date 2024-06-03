@@ -1,11 +1,11 @@
 .box-result {
     display: flex;
     justify-content: space-evenly;
+    gap: 1rem;
 }
 
 .track-list {
     margin-top: 20px;
-    width: 50%;
     background-color: hsla(180, 100%, 50%, 0.2);
     padding: 2rem;
     border-radius: 1rem;

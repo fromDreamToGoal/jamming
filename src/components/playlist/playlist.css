@@ -11,3 +11,25 @@
     margin-bottom: 10px;
     justify-content: space-between;
 }
+
+.save-button {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: white;
+    background-color: rgba(60, 92, 26, 0.8);
+    width: 6rem;
+    height: 3rem;
+    border-radius: 25px;
+    border: 3px solid green;
+}
+
+.save-button:hover {
+    color: hsla(240, 100%, 50%, 0.4);
+    background-color: hsla(120, 100%, 50%, 0.5);
+    cursor: pointer;
+}
+
+.save-button:active {
+    color: hsla(10, 100%, 50%, 1);
+}

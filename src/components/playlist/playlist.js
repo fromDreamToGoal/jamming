@@ -17,6 +17,7 @@ const Playlist = ({ playlist, removeFromPlaylist }) => {
           ))}
         </ul>
       )}
+      <button className='save-button'>Save to Spotify</button>
     </div>
   );
 };
