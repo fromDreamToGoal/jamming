@@ -109,7 +109,8 @@ function SearchBar() {
                        id='search-field'
                        type="text"
                        value={inputValue}
-                       onChange={handleInputChange}></input>
+                       onChange={handleInputChange}
+                       placeholder='Track, artist, etc.'></input>
                  <button className='button' type='submit' id='authorize-button'>Search</button>
                 </form>
             </div>
