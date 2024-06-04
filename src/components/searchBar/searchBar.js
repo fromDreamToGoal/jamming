@@ -106,6 +106,7 @@ function SearchBar() {
             <div className='input-box'>
                 <form className="search-bar" onSubmit={handleButtonClick}>
                  <input className='input-field'
+                       id='search-field'
                        type="text"
                        value={inputValue}
                        onChange={handleInputChange}></input>

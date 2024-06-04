@@ -33,3 +33,13 @@
 .save-button:active {
     color: hsla(10, 100%, 50%, 1);
 }
+
+.input-field {
+    background-color: transparent; /* Делает фон прозрачным */
+    border: 1px solid #ccc; /* Добавляет границу */
+    color: white; /* Цвет текста */
+    padding: 10px; /* Внутренние отступы */
+    border-radius: 5px; /* Закругленные углы */
+    width: 100%; /* Ширина */
+    box-sizing: border-box; /* Включает отступы и границу в общую ширину */
+}

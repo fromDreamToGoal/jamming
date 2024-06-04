@@ -6,8 +6,11 @@
 }
 
 .input-field {
-    width: 250px;
     margin: 1rem;
+}
+
+#search-field {
+    width: 9rem;
 }
 
 .button {

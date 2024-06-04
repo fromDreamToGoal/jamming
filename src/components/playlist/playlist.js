@@ -5,6 +5,8 @@ const Playlist = ({ playlist, removeFromPlaylist }) => {
   return (
     <div className="playlist">
       <h2>Playlist</h2>
+      <input placeholder='Your name playlist'
+             className='input-field'></input>
       {playlist.length === 0 ? (
         <p>No tracks in playlist</p>
       ) : (
