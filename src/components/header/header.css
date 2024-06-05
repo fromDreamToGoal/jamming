@@ -1,0 +1,20 @@
+.contener {
+    width: 90%;
+    margin-top: 20px;
+    background-color: hsla(180, 100%, 50%, 0.2);
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+.contener h1 {
+    font-size: 4em; /* Большой размер шрифта */
+    color: #61dafb; /* Голубой цвет */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Тень текста */
+    font-family: 'Arial', sans-serif; /* Семейство шрифтов */
+    transition: transform 0.2s; /* Плавный переход при наведении */
+}
+
+.contener h1:hover {
+    transform: scale(1.1); /* Увеличение при наведении */
+    color: #21a1f1; /* Более насыщенный цвет при наведении */
+}

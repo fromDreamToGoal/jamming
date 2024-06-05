@@ -1,14 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
 import SearchBar from './components/searchBar/searchBar';
+import Header from './components/header/header';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-      <SearchBar />
+      <main className="App-body">
+        <Header />
+        <SearchBar />
         <img src={logo} className="App-logo" alt="logo" />
-      </header>
+      </main>
     </div>
   );
 }
