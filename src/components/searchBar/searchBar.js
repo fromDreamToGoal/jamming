@@ -1,11 +1,9 @@
 import './searchBar.css';
 import { useEffect, useState } from 'react';
-import TrackList from '/Users/sergei_golovenko/Projects/jamming/src/components/tracklist/tracklist.js';
 
-function SearchBar() {
+function SearchBar({ setTracks, setAccessToken }) {
     const [inputValue, setInputValue] = useState('');
-    const [accessToken, setAccessToken] = useState(null);
-    const [tracks, setTracks] = useState([]);
+    const [accessTokenInternal, setAccessTokenInternal] = useState(null);
 
     useEffect(() => {
         const tokenFromURL = getAccessTokenFromURL();
@@ -14,16 +12,16 @@ function SearchBar() {
 
         if (tokenFromURL) {
             console.log('Access token from URL: ', tokenFromURL);
-            setAccessToken(tokenFromURL);
+            setAccessTokenInternal(tokenFromURL);
         } else if (tokenFromStorage && tokenExpiration && new Date().getTime() < tokenExpiration) {
             console.log('Access token from storage: ', tokenFromStorage);
-            setAccessToken(tokenFromStorage);
+            setAccessTokenInternal(tokenFromStorage);
         } else {
             console.log('Token not found or expired');
             localStorage.removeItem('access_token');
             localStorage.removeItem('token_expiration');
         }
-    }, []);
+    }, [setAccessToken]);
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
@@ -31,7 +29,7 @@ function SearchBar() {
 
     const handleButtonClick = (event) => {
         event.preventDefault();
-        if (!accessToken) {
+        if (!accessTokenInternal) {
             getToken();
         } else {
             handleSearch();
@@ -52,11 +50,11 @@ function SearchBar() {
     }
 
     const handleSearch = async () => {
-        console.log('Performing search with token:', accessToken);
+        console.log('Performing search with token:', accessTokenInternal);
         const endpoint = `https://api.spotify.com/v1/search?q=${encodeURIComponent(inputValue)}&type=track`;
         const response = await fetch(endpoint, {
             headers: {
-                'Authorization': `Bearer ${accessToken}`
+                'Authorization': `Bearer ${accessTokenInternal}`
             }
         });
 
@@ -71,6 +69,7 @@ function SearchBar() {
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('token_expiration');
                 setAccessToken(null);
+                setAccessTokenInternal(null);
                 alert('Access token expired or missing permissions. Please reauthorize.');
                 getToken(); // Trigger reauthorization
             }
@@ -115,7 +114,6 @@ function SearchBar() {
                 </form>
             </div>
             <div className='search-result'>
-                <TrackList tracks={tracks} />
             </div>
         </div>
         

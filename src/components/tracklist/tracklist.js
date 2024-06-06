@@ -1,25 +1,8 @@
 import React, { useState } from 'react';
 import './tracklist.css';
-import Playlist from '/Users/sergei_golovenko/Projects/jamming/src/components/playlist/playlist.js';
 
-const TrackList = ({ tracks }) => {
-    const [playlist, setPlaylist] = useState([]);
-
-    const addToPlaylist = (track) => {
-      // Проверка, есть ли уже трек в плейлисте
-      if (!playlist.find(item => item.id === track.id)) {
-         setPlaylist([...playlist, track]);
-      } else {
-         alert('Track is already in the playlist');
-      }
-    };
-
-    const removeFromPlaylist = (trackId) => {
-      setPlaylist(playlist.filter(track => track.id !== trackId));
-    };
-
+const TrackList = ({ tracks, addToPlaylist }) => {
   return (
-    <div className='box-result'>
       <div className="track-list">
         <h2>Results of search</h2>
       {tracks.length === 0 ? (
@@ -40,9 +23,6 @@ const TrackList = ({ tracks }) => {
         </ul>
        )}
        </div>
-       <Playlist playlist={playlist} removeFromPlaylist={removeFromPlaylist} />
-    </div>
-    
   );
 };
 
