@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 function SearchBar({ setTracks, setAccessToken }) {
     const [inputValue, setInputValue] = useState('');
-    const [accessTokenInternal, setAccessTokenInternal] = useState(null);
+    const [localAccessToken, setLocalAccessToken] = useState(null);
 
     useEffect(() => {
         const tokenFromURL = getAccessTokenFromURL();
@@ -12,10 +12,12 @@ function SearchBar({ setTracks, setAccessToken }) {
 
         if (tokenFromURL) {
             console.log('Access token from URL: ', tokenFromURL);
-            setAccessTokenInternal(tokenFromURL);
+            setAccessToken(tokenFromURL);
+            setLocalAccessToken(tokenFromURL);
         } else if (tokenFromStorage && tokenExpiration && new Date().getTime() < tokenExpiration) {
             console.log('Access token from storage: ', tokenFromStorage);
-            setAccessTokenInternal(tokenFromStorage);
+            setAccessToken(tokenFromStorage);
+            setLocalAccessToken(tokenFromStorage);
         } else {
             console.log('Token not found or expired');
             localStorage.removeItem('access_token');
@@ -29,7 +31,7 @@ function SearchBar({ setTracks, setAccessToken }) {
 
     const handleButtonClick = (event) => {
         event.preventDefault();
-        if (!accessTokenInternal) {
+        if (!localAccessToken) {
             getToken();
         } else {
             handleSearch();
@@ -50,11 +52,11 @@ function SearchBar({ setTracks, setAccessToken }) {
     }
 
     const handleSearch = async () => {
-        console.log('Performing search with token:', accessTokenInternal);
+        console.log('Performing search with token:', localAccessToken);
         const endpoint = `https://api.spotify.com/v1/search?q=${encodeURIComponent(inputValue)}&type=track`;
         const response = await fetch(endpoint, {
             headers: {
-                'Authorization': `Bearer ${accessTokenInternal}`
+                'Authorization': `Bearer ${localAccessToken}`
             }
         });
 
@@ -68,8 +70,8 @@ function SearchBar({ setTracks, setAccessToken }) {
                 console.warn('403 Forbidden: Access token might be expired or missing required scopes');
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('token_expiration');
+                setLocalAccessToken(null);
                 setAccessToken(null);
-                setAccessTokenInternal(null);
                 alert('Access token expired or missing permissions. Please reauthorize.');
                 getToken(); // Trigger reauthorization
             }

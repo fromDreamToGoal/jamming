@@ -21,11 +21,15 @@ function App() {
     setPlaylist(playlist.filter(track => track.id !== trackId));
   };
 
+  const handleSetAccessToken = (token) => {
+    setAccessToken(token);
+  };
+
   return (
     <div className="App">
       <main className="App-body">
         <Header />
-        <SearchBar setTracks={setTracks} setAccessToken={setAccessToken} />
+        <SearchBar setTracks={setTracks} setAccessToken={handleSetAccessToken} />
         <TrackList tracks={tracks} addToPlaylist={addToPlaylist} />
         <Playlist playlist={playlist} removeFromPlaylist={removeFromPlaylist} accessToken={accessToken} />
         <img src={logo} className="App-logo" alt="logo" />
