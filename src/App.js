@@ -30,8 +30,10 @@ function App() {
       <main className="App-body">
         <Header />
         <SearchBar setTracks={setTracks} setAccessToken={handleSetAccessToken} />
-        <TrackList tracks={tracks} addToPlaylist={addToPlaylist} />
-        <Playlist playlist={playlist} removeFromPlaylist={removeFromPlaylist} accessToken={accessToken} />
+        <div className='box-result'>
+          <TrackList tracks={tracks} addToPlaylist={addToPlaylist} />
+          <Playlist playlist={playlist} removeFromPlaylist={removeFromPlaylist} accessToken={accessToken} />
+        </div>
         <img src={logo} className="App-logo" alt="logo" />
       </main>
     </div>

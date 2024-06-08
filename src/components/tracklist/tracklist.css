@@ -1,9 +1,3 @@
-.box-result {
-    display: flex;
-    justify-content: space-evenly;
-    gap: 1rem;
-}
-
 .track-list {
     margin-top: 20px;
     background-color: hsla(180, 100%, 50%, 0.2);
