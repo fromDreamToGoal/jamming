@@ -6,18 +6,18 @@ function SearchBar({ setTracks, setAccessToken }) {
     const [localAccessToken, setLocalAccessToken] = useState(null);
 
     useEffect(() => {
-        const tokenFromURL = getAccessTokenFromURL();
         const tokenFromStorage = localStorage.getItem('access_token');
         const tokenExpiration = localStorage.getItem('token_expiration');
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
 
-        if (tokenFromURL) {
-            console.log('Access token from URL: ', tokenFromURL);
-            setAccessToken(tokenFromURL);
-            setLocalAccessToken(tokenFromURL);
-        } else if (tokenFromStorage && tokenExpiration && new Date().getTime() < tokenExpiration) {
+        if (tokenFromStorage && tokenExpiration && new Date().getTime() < tokenExpiration) {
             console.log('Access token from storage: ', tokenFromStorage);
             setAccessToken(tokenFromStorage);
             setLocalAccessToken(tokenFromStorage);
+        } else if (code) {
+            exchangeCodeForToken(code);
+            window.location.hash = '';
         } else {
             console.log('Token not found or expired');
             localStorage.removeItem('access_token');
@@ -32,24 +32,82 @@ function SearchBar({ setTracks, setAccessToken }) {
     const handleButtonClick = (event) => {
         event.preventDefault();
         if (!localAccessToken) {
-            getToken();
+            startAuthorization();
         } else {
             handleSearch();
         }
     };
 
-    const getToken = () => {
+    function generateRandomString(length) {
+        var text = '';
+        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        for (var i = 0; i < length; i++) {
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
+      };
+
+    const startAuthorization = () => {
         const clientId = '8b57f561cd76450194bfd65bf89333e6';
         const redirectUri = 'http://localhost:3000/?';
-        const responseType = 'token';
+        const state = generateRandomString(16);
+        const responseType = 'code';
         const authEndpoint = 'https://accounts.spotify.com/authorize';
-        const scope = 'user-read-private user-read-email playlist-read-private playlist-modify-public';
+        const scope = 'user-read-private user-read-email playlist-read-private playlist-modify-public playlist-modify-private';
 
-        const authUrl = `${authEndpoint}?client_id=${clientId}&response_type=${responseType}&redirect_uri=${redirectUri}&scope=${encodeURIComponent(scope)}`;
-        console.log(authUrl);
+        localStorage.setItem('spotify_auth_state', state);
+
+        const authUrl = `${authEndpoint}?response_type=${responseType}&client_id=${clientId}&scope=${scope}&redirect_uri=${redirectUri}&state=${state}`;
 
         window.location = authUrl;
     }
+
+    const exchangeCodeForToken = async (code) => {
+        const clientId = '8b57f561cd76450194bfd65bf89333e6';
+        const redirectUri = 'http://localhost:3000/?';
+        const clientSecret = '210db2a97e044aa183a9ddfce0bdde4d';
+
+        try {
+            const response = await fetch('https://accounts.spotify.com/api/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
+                },
+                body: new URLSearchParams({
+                    grant_type: 'authorization_code',
+                    code: code,
+                    redirect_uri: redirectUri,
+                    client_id: clientId,
+                    client_secret: '210db2a97e044aa183a9ddfce0bdde4d' // Replace with your actual client secret
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Response from token POST request:', data);
+                const accessToken = data.access_token;
+                const expiresIn = data.expires_in;
+                const refreshToken = data.refresh_token;
+
+                const expirationTime = new Date().getTime() + expiresIn * 1000;
+                localStorage.setItem('access_token', accessToken);
+                localStorage.setItem('token_expiration', expirationTime);
+                localStorage.setItem('refresh_token', refreshToken);
+
+                console.log('Access token stored in localStorage');
+                console.log('Refresh token stored in local storage is:', refreshToken)
+
+                setAccessToken(accessToken);
+                setLocalAccessToken(accessToken);
+            } else {
+                console.error('Failed to fetch access token');
+            }
+        } catch (error) {
+            console.error('Error fetching access token', error);
+        }
+    };
 
     const handleSearch = async () => {
         console.log('Performing search with token:', localAccessToken);
@@ -73,33 +131,9 @@ function SearchBar({ setTracks, setAccessToken }) {
                 setLocalAccessToken(null);
                 setAccessToken(null);
                 alert('Access token expired or missing permissions. Please reauthorize.');
-                getToken(); // Trigger reauthorization
+                startAuthorization(); // Trigger reauthorization
             }
         }
-    }
-
-    function getAccessTokenFromURL() {
-        const hash = window.location.hash;
-        if (!hash) {
-            return null;
-        }
-
-        const params = new URLSearchParams(hash.substring(1));
-        const accessToken = params.get('access_token');
-        const expiresIn = params.get('expires_in');
-
-        if (accessToken) {
-            window.location.hash = '';
-
-            const expirationTime = new Date().getTime() + expiresIn * 1000;
-            localStorage.setItem('access_token', accessToken);
-            localStorage.setItem('token_expiration', expirationTime);
-
-            console.log('Access token stored in localStorage');
-
-            return accessToken;
-        }
-        return null;
     }
 
     return (

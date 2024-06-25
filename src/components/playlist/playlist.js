@@ -30,21 +30,31 @@ const Playlist = ({ playlist, removeFromPlaylist, accessToken }) => {
       alert('Failed to save playlist');
     }
   };
-
+  
   const getUserId = async () => {
-    const response = await fetch('https://api.spotify.com/v1/me', {
+    const token = localStorage.getItem('access_token');
+    const refreshToken = localStorage.getItem('refresh_token');
+    try {
+      console.log('Try fetch data with token:', token);
+      const response = await fetch('https://api.spotify.com/v1/me', {
       headers: {
-        Authorization: `Bearer ${accessToken}`
+        Authorization: 'Bearer ' + token
       }
-    });
-
+    })
+    
     if (response.ok) {
       const data = await response.json();
       return data.id;
-    } else {
-      console.log(`Used token: ${accessToken}`);
-      console.error('Failed to fetch user ID');
-      return null;
+    }  else {
+      if (response.status === 403) {
+        console.error('Access denied. Token might be expired or missing required scopes.');
+      } else {
+        console.error('Failed to fetch user ID', response.status);
+      }
+      throw new Error('Request field!');
+    }
+    } catch (error) {
+      console.log(error);
     }
   };
 
