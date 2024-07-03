@@ -1,7 +1,8 @@
-# Getting Started with Create React App
+# Jamming
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Jamming is a web application that allows users to search for tracks on Spotify, add them to playlists, and manage these playlists.
 ## Available Scripts
 
 In the project directory, you can run:
