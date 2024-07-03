@@ -32,13 +32,12 @@ const Playlist = ({ playlist, removeFromPlaylist, accessToken }) => {
   };
   
   const getUserId = async () => {
-    const token = localStorage.getItem('access_token');
-    const refreshToken = localStorage.getItem('refresh_token');
+    let accessToken = localStorage.getItem('access_token');
     try {
-      console.log('Try fetch data with token:', token);
+      console.log('Try fetch data with token:', accessToken);
       const response = await fetch('https://api.spotify.com/v1/me', {
       headers: {
-        Authorization: 'Bearer ' + token
+        Authorization: 'Bearer ' + accessToken
       }
     })
     

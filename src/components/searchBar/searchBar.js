@@ -8,16 +8,23 @@ function SearchBar({ setTracks, setAccessToken }) {
     useEffect(() => {
         const tokenFromStorage = localStorage.getItem('access_token');
         const tokenExpiration = localStorage.getItem('token_expiration');
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
+        const urlParams = new URLSearchParams(window.location.hash.substring(1));
+        const accessToken = urlParams.get('access_token');
+        const expiresIn = urlParams.get('expires_in');
 
         if (tokenFromStorage && tokenExpiration && new Date().getTime() < tokenExpiration) {
             console.log('Access token from storage: ', tokenFromStorage);
             setAccessToken(tokenFromStorage);
             setLocalAccessToken(tokenFromStorage);
-        } else if (code) {
-            exchangeCodeForToken(code);
-            window.location.hash = '';
+        } else if (accessToken && expiresIn) {
+            const expirationTime = new Date().getTime() + parseInt(expiresIn, 10) * 1000;
+            localStorage.setItem('access_token', accessToken);
+            localStorage.setItem('token_expiration', expirationTime);
+            setAccessToken(accessToken);
+            setLocalAccessToken(accessToken);
+
+            // Clear the URL hash
+            window.history.replaceState({}, document.title, "/");
         } else {
             console.log('Token not found or expired');
             localStorage.removeItem('access_token');
@@ -52,7 +59,7 @@ function SearchBar({ setTracks, setAccessToken }) {
         const clientId = '8b57f561cd76450194bfd65bf89333e6';
         const redirectUri = 'http://localhost:3000/?';
         const state = generateRandomString(16);
-        const responseType = 'code';
+        const responseType = 'token';
         const authEndpoint = 'https://accounts.spotify.com/authorize';
         const scope = 'user-read-private user-read-email playlist-read-private playlist-modify-public playlist-modify-private';
 
