@@ -5,16 +5,30 @@ import SearchBar from './components/searchBar/searchBar';
 import TrackList from './components/tracklist/tracklist';
 import Playlist from './components/playlist/playlist';
 import Header from './components/header/header';
+import Spotify from './components/util/Spotify';
 
 function App() {
   const [tracks, setTracks] = useState([]);
   const [playlist, setPlaylist] = useState([]);
   const [accessToken, setAccessToken] = useState(null);
+  const [playlistName, setPlaylistName] = useState(null)
 
-  const addToPlaylist = (track) => {
+  /*const saveToPlaylist = (track) => {
     if (!playlist.some(t => t.id === track.id)) {
       setPlaylist([...playlist, track]);
     }
+  };*/
+
+  const addToPlaylist = () => {
+    if (playlist.length === 0 || !playlistName) {
+      return;
+    }
+  
+    const trackUris = playlist.map(track => track.uri);
+    Spotify.savePlaylist(playlistName, trackUris).then(() => {
+      setPlaylist([]);
+      setPlaylistName('');
+    });
   };
 
   const removeFromPlaylist = (trackId) => {
@@ -32,7 +46,7 @@ function App() {
         <SearchBar setTracks={setTracks} setAccessToken={handleSetAccessToken} />
         <div className='box-result'>
           <TrackList tracks={tracks} addToPlaylist={addToPlaylist} />
-          <Playlist playlist={playlist} removeFromPlaylist={removeFromPlaylist} accessToken={accessToken} />
+          <Playlist playlist={playlist} playlistName={playlistName}  removeFromPlaylist={removeFromPlaylist} accessToken={accessToken} />
         </div>
         <img src={logo} className="App-logo" alt="logo" />
       </main>

@@ -15,6 +15,7 @@ const Spotify = {
         const expiresIn = Number(expiresInMatch[1]);
         window.setTimeout(() => accessToken = '', expiresIn * 1000);
         window.history.pushState('Access Token', null, '/'); // This clears the parameters, allowing us to grab a new access token when it expires.
+        console.log(accessToken);
         return accessToken;
       } else {
         const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
@@ -28,9 +29,20 @@ const Spotify = {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
-      }).then(response => {
+      })
+      .then(response => {
+        // Проверка на успешность ответа
+        if (!response.ok) {
+          // Если ответ не успешен, выбросить ошибку с текстом ответа
+          return response.text().then(text => {
+            throw new Error(text);
+          });
+        }
+        const jsonResponce = response.json();
+        console.log(jsonResponce);
         return response.json();
-      }).then(jsonResponse => {
+      })
+      .then(jsonResponse => {
         if (!jsonResponse.tracks) {
           return [];
         }
@@ -41,6 +53,11 @@ const Spotify = {
           album: track.album.name,
           uri: track.uri
         }));
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        // Здесь можно также вернуть пустой массив или другое значение, чтобы не ломать работу приложения
+        return [];
       });
     },
   
