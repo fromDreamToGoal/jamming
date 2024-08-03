@@ -38,8 +38,8 @@ const Spotify = {
             throw new Error(text);
           });
         }
-        const jsonResponce = response.json();
-        console.log(jsonResponce);
+        //const jsonResponce = response.json();
+        //console.log(jsonResponce);
         return response.json();
       })
       .then(jsonResponse => {

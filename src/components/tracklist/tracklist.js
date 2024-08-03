@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './tracklist.css';
 
 const TrackList = ({ tracks, addToPlaylist }) => {
@@ -15,7 +15,6 @@ const TrackList = ({ tracks, addToPlaylist }) => {
                 <div className="track-details">
                   <p>{track.name}</p>
                   <p>{track.artists.map(artist => artist.name).join(', ')}</p>
-                  {/* <p>{track.album.name}</p> */}
                 </div>
                 <button className='button-add' onClick={() => addToPlaylist(track)}>+</button>
             </li>

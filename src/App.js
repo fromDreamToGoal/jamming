@@ -13,11 +13,11 @@ function App() {
   const [accessToken, setAccessToken] = useState(null);
   const [playlistName, setPlaylistName] = useState(null)
 
-  /*const saveToPlaylist = (track) => {
-    if (!playlist.some(t => t.id === track.id)) {
-      setPlaylist([...playlist, track]);
-    }
-  };*/
+  const searchTracks = (term) => {
+    Spotify.search(term).then(results => { 
+      setTracks(results);
+    });
+  };
 
   const addToPlaylist = () => {
     if (playlist.length === 0 || !playlistName) {
@@ -43,7 +43,7 @@ function App() {
     <div className="App">
       <main className="App-body">
         <Header />
-        <SearchBar setTracks={setTracks} setAccessToken={handleSetAccessToken} />
+        <SearchBar setTracks={setTracks} searchTracks={searchTracks} setAccessToken={handleSetAccessToken} />
         <div className='box-result'>
           <TrackList tracks={tracks} addToPlaylist={addToPlaylist} />
           <Playlist playlist={playlist} playlistName={playlistName}  removeFromPlaylist={removeFromPlaylist} accessToken={accessToken} />
@@ -52,6 +52,6 @@ function App() {
       </main>
     </div>
   );
-}
+};
 
 export default App;
