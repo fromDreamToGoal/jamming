@@ -19,8 +19,19 @@ function App() {
     });
   };
 
-  const addToPlaylist = () => {
+  const addToPlaylist = (track) => {
+    if (!playlist.some(t => t.id === track.id)) {
+      setPlaylist([...playlist, track]);
+    }
+  };
+
+  const removeFromPlaylist = (trackId) => {
+    setPlaylist(playlist.filter(track => track.id !== trackId));
+  };
+
+  const savePlaylist = () => {
     if (playlist.length === 0 || !playlistName) {
+      alert('Enter playlist name and add tracks to playlist');
       return;
     }
   
@@ -29,10 +40,6 @@ function App() {
       setPlaylist([]);
       setPlaylistName('');
     });
-  };
-
-  const removeFromPlaylist = (trackId) => {
-    setPlaylist(playlist.filter(track => track.id !== trackId));
   };
 
   const handleSetAccessToken = (token) => {
@@ -46,7 +53,7 @@ function App() {
         <SearchBar setTracks={setTracks} searchTracks={searchTracks} setAccessToken={handleSetAccessToken} />
         <div className='box-result'>
           <TrackList tracks={tracks} addToPlaylist={addToPlaylist} />
-          <Playlist playlist={playlist} playlistName={playlistName}  removeFromPlaylist={removeFromPlaylist} accessToken={accessToken} />
+          <Playlist playlist={playlist} playlistName={playlistName}  removeFromPlaylist={removeFromPlaylist} accessToken={accessToken} savePlaylist={savePlaylist} />
         </div>
         <img src={logo} className="App-logo" alt="logo" />
       </main>
