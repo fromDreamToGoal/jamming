@@ -10,7 +10,7 @@ const Playlist = ({ playlist = [], playlistName, setPlaylistName, removeFromPlay
   return (
     <div className="playlist">
       <h2>Your new playlist</h2>
-      <input
+      <input className='input-field'
         type="text"
         placeholder="Enter playlist name"
         value={playlistName}

@@ -93,6 +93,7 @@ const Spotify = {
         })
         .then(() => {
           console.log('Playlist successfully saved!');
+          alert('Playlist successfully saved!');
         })
         .catch(error => {
           console.error('Error saving playlist:', error);
