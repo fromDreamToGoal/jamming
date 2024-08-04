@@ -1,5 +1,5 @@
 import React from "react";
-import '/Users/sergei_golovenko/Projects/jamming/src/components/header/header.css';
+import './header.css';
 
 function Header() {
     return (
