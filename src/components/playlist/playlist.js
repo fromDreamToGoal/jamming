@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './playlist.css';
 
-const Playlist = ({ playlist = [], playlistName, removeFromPlaylist, savePlaylist }) => {
-  const [name, setName] = useState('');
+const Playlist = ({ playlist = [], playlistName, setPlaylistName, removeFromPlaylist, savePlaylist }) => {
 
   const handleNameChange = (e) => {
-    setName(e.target.value);
+    setPlaylistName(e.target.value);
   };
 
   return (
@@ -14,7 +13,7 @@ const Playlist = ({ playlist = [], playlistName, removeFromPlaylist, savePlaylis
       <input
         type="text"
         placeholder="Enter playlist name"
-        value={name}
+        value={playlistName}
         onChange={handleNameChange}
       />
       <ul className="playlist-tracks">

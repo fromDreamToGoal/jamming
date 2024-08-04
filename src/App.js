@@ -11,7 +11,7 @@ function App() {
   const [tracks, setTracks] = useState([]);
   const [playlist, setPlaylist] = useState([]);
   const [accessToken, setAccessToken] = useState(null);
-  const [playlistName, setPlaylistName] = useState(null)
+  const [playlistName, setPlaylistName] = useState('');
 
   const searchTracks = (term) => {
     Spotify.search(term).then(results => { 
@@ -32,6 +32,8 @@ function App() {
   const savePlaylist = () => {
     if (playlist.length === 0 || !playlistName) {
       alert('Enter playlist name and add tracks to playlist');
+      console.log(playlistName);
+      console.log(playlist);
       return;
     }
   
@@ -53,7 +55,7 @@ function App() {
         <SearchBar setTracks={setTracks} searchTracks={searchTracks} setAccessToken={handleSetAccessToken} />
         <div className='box-result'>
           <TrackList tracks={tracks} addToPlaylist={addToPlaylist} />
-          <Playlist playlist={playlist} playlistName={playlistName}  removeFromPlaylist={removeFromPlaylist} accessToken={accessToken} savePlaylist={savePlaylist} />
+          <Playlist playlist={playlist} playlistName={playlistName} setPlaylistName={setPlaylistName}  removeFromPlaylist={removeFromPlaylist} accessToken={accessToken} savePlaylist={savePlaylist} />
         </div>
         <img src={logo} className="App-logo" alt="logo" />
       </main>
