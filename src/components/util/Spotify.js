@@ -1,5 +1,5 @@
 const clientId = '8b57f561cd76450194bfd65bf89333e6';
-const redirectUri = 'http://localhost:3000/?';
+const redirectUri = process.env.REACT_APP_SPOTIFY_REDIRECT_URI;
 let accessToken;
 
 const Spotify = {
