@@ -52,7 +52,7 @@ function App() {
     <div className="App">
       <main className="App-body">
         <Header />
-        <SearchBar setTracks={setTracks} searchTracks={searchTracks} setAccessToken={handleSetAccessToken} />
+        <SearchBar searchTracks={searchTracks} setAccessToken={handleSetAccessToken} />
         <div className='box-result'>
           <TrackList tracks={tracks} addToPlaylist={addToPlaylist} />
           <Playlist playlist={playlist} playlistName={playlistName} setPlaylistName={setPlaylistName}  removeFromPlaylist={removeFromPlaylist} accessToken={accessToken} savePlaylist={savePlaylist} />
