@@ -1,10 +1,18 @@
 import Spotify from '../util/Spotify';
 import './searchBar.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function SearchBar({ setAccessToken, searchTracks }) {
     const [localToken, setLocalToken] = useState('');
     const [term, setTerm] = useState('');
+
+    useEffect(() => {
+        const token = Spotify.getAccessToken();
+        if (token) {
+            setLocalToken(token);
+            setAccessToken(token);
+        }
+    }, [setAccessToken]);
 
     const handleTermChange = (event) => {
         setTerm(event.target.value);
@@ -15,10 +23,8 @@ function SearchBar({ setAccessToken, searchTracks }) {
 
         if (!localToken) {
             alert('Please authorize to search for tracks');
-            let token = Spotify.getAccessToken();
-            setLocalToken(token);
-            setAccessToken(token);
-        };
+            return;
+        }
 
         searchTracks(term);
     };

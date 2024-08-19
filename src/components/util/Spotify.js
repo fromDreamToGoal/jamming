@@ -38,8 +38,6 @@ const Spotify = {
             throw new Error(text);
           });
         }
-        //const jsonResponce = response.json();
-        //console.log(jsonResponce);
         return response.json();
       })
       .then(jsonResponse => {
@@ -56,7 +54,6 @@ const Spotify = {
       })
       .catch(error => {
         console.error('Error fetching data:', error);
-        alert(`Enter a valid search term`);
         // Здесь можно также вернуть пустой массив или другое значение, чтобы не ломать работу приложения
         return [];
       });
